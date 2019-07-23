@@ -1,5 +1,8 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
+
+import 'package:flutter/material.dart';
+
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class PageOne extends StatefulWidget {
   @override
@@ -22,7 +25,8 @@ class _PageOneState extends State<PageOne> with AutomaticKeepAliveClientMixin {
 
     _loadData();
     _scrollController.addListener(() {
-      if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
+      if (_scrollController.position.pixels ==
+          _scrollController.position.maxScrollExtent) {
         this._loadData();
       }
     });
@@ -32,7 +36,28 @@ class _PageOneState extends State<PageOne> with AutomaticKeepAliveClientMixin {
     if (_noMore) return;
 
     Future.delayed(Duration(seconds: 2)).then((e) {
-      var _newWords = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"].toList();
+      var _newWords = [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10"
+      ].toList();
       _words.insertAll(_words.length - 1, _newWords);
       if (_words.length > 100) {
         _noMore = true;
@@ -54,7 +79,10 @@ class _PageOneState extends State<PageOne> with AutomaticKeepAliveClientMixin {
         return Container(
           padding: EdgeInsets.all(8),
           alignment: Alignment.center,
-          child: CircularProgressIndicator(strokeWidth: 2.0),
+          child: SpinKitThreeBounce(
+            color: Colors.blue,
+            size: 20.0,
+          ),
         );
       }
     }
