@@ -89,6 +89,7 @@ class _PageOneState extends State<PageOne> with AutomaticKeepAliveClientMixin {
 
     return ListTile(
       title: Text(_words[index]),
+      trailing: Icon(IconData(0xe600, fontFamily: "iconfont"), size: 16.0)
     );
   }
 
