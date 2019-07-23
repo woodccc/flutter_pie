@@ -32,6 +32,7 @@ class _HomePageState extends State<HomePage>
         child: Text(
           tab[i],
           maxLines: 1,
+          style: TextStyle(color: Colors.white),
         ),
       ));
     }
@@ -53,7 +54,7 @@ class _HomePageState extends State<HomePage>
         tabViews: _renderViews(),
         tabItems: _renderTabs(),
         topPageControl: topPageControl,
-        backgroundColor: Colors.black45,
+        backgroundColor: Colors.blue[400],
         indicatorColor: Colors.white,
         title: new Text("Github Demo"));
   }
