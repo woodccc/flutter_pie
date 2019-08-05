@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
+import 'package:github_demo/api/api.dart' as api;
+
 class PageOne extends StatefulWidget {
   @override
   _PageOneState createState() => _PageOneState();
@@ -30,6 +32,11 @@ class _PageOneState extends State<PageOne> with AutomaticKeepAliveClientMixin {
         this._loadData();
       }
     });
+    api.getMovieList()
+      .then((data) {
+        print('------------------------');
+        print(data.title);
+      });
   }
 
   _loadData() {
