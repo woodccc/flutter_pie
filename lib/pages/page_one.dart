@@ -37,6 +37,14 @@ class _PageOneState extends State<PageOne> with AutomaticKeepAliveClientMixin {
     });
   }
 
+  Future<Null> _refreshData() async {
+    _words = <dynamic>[loadingTag];
+    _noMore = false;
+    _total = 0;
+
+    _loadData();  
+  }
+
   _loadData() {
     if (_noMore) return;
 
@@ -83,13 +91,18 @@ class _PageOneState extends State<PageOne> with AutomaticKeepAliveClientMixin {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
+    Widget listView = ListView.separated(
       itemCount: _words.length,
       itemBuilder: (context, index) {
         return _buildItem(index);
       },
       separatorBuilder: (index, context) => Divider(height: .0),
       controller: _scrollController,
+    );
+
+    return new RefreshIndicator( // 下拉刷新
+      child: listView,
+      onRefresh: _refreshData,
     );
   }
 }
