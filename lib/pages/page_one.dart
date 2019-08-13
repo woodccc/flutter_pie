@@ -6,7 +6,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import 'package:github_demo/api/api.dart' as api;
 
-import 'package:github_demo/api/model/movie.dart';
+import 'package:github_demo/pages/componnents/movie_item.dart';
 
 class PageOne extends StatefulWidget {
   @override
@@ -20,7 +20,7 @@ class _PageOneState extends State<PageOne> with AutomaticKeepAliveClientMixin {
   final ScrollController _scrollController = new ScrollController();
 
   static const loadingTag = "##loading##";
-  var _words = <dynamic>[loadingTag];
+  var _movieSubjects = <dynamic>[loadingTag];
   var _noMore = false;
   var _total = 0;
 
@@ -38,7 +38,7 @@ class _PageOneState extends State<PageOne> with AutomaticKeepAliveClientMixin {
   }
 
   Future<Null> _refreshData() async {
-    _words = <dynamic>[loadingTag];
+    _movieSubjects = <dynamic>[loadingTag];
     _noMore = false;
     _total = 0;
 
@@ -48,13 +48,13 @@ class _PageOneState extends State<PageOne> with AutomaticKeepAliveClientMixin {
   _loadData() {
     if (_noMore) return;
 
-    api.getMovieList(start: _words.length, count: 13).then((data) {
+    api.getMovieList(start: _movieSubjects.length, count: 13).then((data) {
       var _subjects = data.subjects.toList();
 
-      _words.insertAll(_words.length - 1, _subjects);
+      _movieSubjects.insertAll(_movieSubjects.length - 1, _subjects);
       _total = data.total;
 
-      if (_words.length >= _total) {
+      if (_movieSubjects.length >= _total) {
         _noMore = true;
       }
       setState(() {});
@@ -62,7 +62,7 @@ class _PageOneState extends State<PageOne> with AutomaticKeepAliveClientMixin {
   }
 
   _buildItem(index) {
-    final word = _words[index];
+    final word = _movieSubjects[index];
     if (word == loadingTag) {
       if (_noMore) {
         return Container(
@@ -82,17 +82,15 @@ class _PageOneState extends State<PageOne> with AutomaticKeepAliveClientMixin {
       }
     }
 
-    var movie = Movie.fromJson(_words[index]);
+    var movie = _movieSubjects[index];
 
-    return ListTile(
-        title: Text(movie.title),
-        trailing: Icon(IconData(0xe600, fontFamily: "iconfont"), size: 16.0));
+    return MovieItem(movie: movie);
   }
 
   @override
   Widget build(BuildContext context) {
     Widget listView = ListView.separated(
-      itemCount: _words.length,
+      itemCount: _movieSubjects.length,
       itemBuilder: (context, index) {
         return _buildItem(index);
       },

@@ -1,4 +1,3 @@
-import 'dart:convert' as convert;
 import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:github_demo/api/model/movieList.dart';
@@ -11,10 +10,9 @@ getMovieList({history = false, start = 0, count = 10}) async {
       'https://api.douban.com/v2/movie/${history ? 'top250' : 'in_theaters'}?apikey=$apikey&city=%E5%8D%97%E4%BA%AC&start=$start&count=$count';
   var res = await Dio().get(url);
   if (res.statusCode == 200) {
-    var data = new MovieList.fromJson(res.data);
-    return data;
+    return new MovieList.fromJson(res.data);
   } else {
-    // print("Request failed with status: ${res.statusCode}.");
+    print("Request failed with status: ${res.statusCode}.");
   }
 }
 
