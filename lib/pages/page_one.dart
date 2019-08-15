@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-import 'package:github_demo/api/api.dart' as api;
+import 'package:flutter_pie/api/api.dart' as api;
 
-import 'package:github_demo/pages/componnents/movie_item.dart';
+import 'package:flutter_pie/pages/componnents/movie_item.dart';
 
 class PageOne extends StatefulWidget {
   @override

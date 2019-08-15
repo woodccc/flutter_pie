@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:github_demo/widget/my_tabbar_widget.dart';
+import 'package:flutter_pie/widget/my_tabbar_widget.dart';
 
-import 'package:github_demo/pages/page_one.dart';
-import 'package:github_demo/pages/page_two.dart';
-import 'package:github_demo/pages/page_three.dart';
+import 'package:flutter_pie/pages/page_one.dart';
+import 'package:flutter_pie/pages/page_two.dart';
+import 'package:flutter_pie/pages/page_three.dart';
 
 class HomePage extends StatefulWidget {
   @override

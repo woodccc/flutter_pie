@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:github_demo/pages/home_page.dart';
+import 'package:flutter_pie/pages/home_page.dart';
 
-import 'package:github_demo/pages/movie_detail_page.dart';
+import 'package:flutter_pie/pages/movie_detail_page.dart';
 
 void main() => runApp(MyApp());
 

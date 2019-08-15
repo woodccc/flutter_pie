@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:github_demo/api/model/movieList.dart';
-import 'package:github_demo/api/model/movie_detail.dart';
+import 'package:flutter_pie/api/model/movieList.dart';
+import 'package:flutter_pie/api/model/movie_detail.dart';
 
 const apikey = '0b2bdeda43b5688921839c8ecb20399b';
 

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:github_demo/api/api.dart' as api;
+import 'package:flutter_pie/api/api.dart' as api;
 
-import 'package:github_demo/api/model/movie_detail.dart';
+import 'package:flutter_pie/api/model/movie_detail.dart';
 
 class MovieDetailPage extends StatefulWidget {
   MovieDetailPage({this.arguments});
