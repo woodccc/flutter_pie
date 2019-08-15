@@ -12,7 +12,6 @@ class MovieDetailPage extends StatefulWidget {
 }
 
 class _MovieDetailPageState extends State<MovieDetailPage> {
-
   var _movieDetail = new MovieDetail.fromJson({"title": ''});
 
   @override
@@ -31,21 +30,18 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: _movieDetail.title.isEmpty
-          ? Center(
-              child: CircularProgressIndicator(),
-            )
-          : Center(
-              child: Column(
-                children: <Widget>[
-                  Text(_movieDetail.title),
-                  Image.network(
-                    _movieDetail.images.small,
-                    height: 200,
-                  )
-                ],
-              ),
+      body: Column(
+        children: <Widget>[
+          Hero(
+            child: Image.network(
+              widget.arguments["image"],
+              height: 300,
             ),
+            tag: 'hero_tag_movie_image${widget.arguments["id"].toString()}',
+          ),
+          Text(_movieDetail.title),
+        ],
+      ),
     );
   }
 }

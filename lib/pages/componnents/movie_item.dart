@@ -13,9 +13,12 @@ class MovieItem extends StatelessWidget {
         height: 300,
         child: Column(
           children: <Widget>[
-            Image.network(
-              movie.images.small,
-              height: 180,
+            Hero(
+              child: Image.network(
+                movie.images.small,
+                height: 180,
+              ),
+              tag: 'hero_tag_movie_image${movie.id.toString()}',
             ),
             Text(movie.title),
             Text(movie.genres[0]),
@@ -25,7 +28,7 @@ class MovieItem extends StatelessWidget {
       ),
       onTap: () {
         Navigator.pushNamed(context, "/movie_detail_page",
-            arguments: {"id": movie.id});
+            arguments: {"id": movie.id, "image": movie.images.small});
       },
     );
   }
