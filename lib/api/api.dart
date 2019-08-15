@@ -1,6 +1,6 @@
-import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:github_demo/api/model/movieList.dart';
+import 'package:github_demo/api/model/movie_detail.dart';
 
 const apikey = '0b2bdeda43b5688921839c8ecb20399b';
 
@@ -16,12 +16,13 @@ getMovieList({history = false, start = 0, count = 10}) async {
   }
 }
 
-// getMovieDetail(id) async {
-//   var url = 'https://api.douban.com/v2/movie/subject/$id?apikey=$apikey';
-//   var res = await Dio().get(url);
-//   if (res.statusCode == 200) {
-//     return convert.jsonDecode(res.body);
-//   } else {
-//     print("Request failed with status: ${res.statusCode}.");
-//   }
-// }
+getMovieDetail(id) async {
+  var url = 'https://api.douban.com/v2/movie/subject/$id?apikey=$apikey';
+  var res = await Dio().get(url);
+  if (res.statusCode == 200) {
+    return new MovieDetail.fromJson(res.data);
+    // return res.data;
+  } else {
+    print("Request failed with status: ${res.statusCode}.");
+  }
+}

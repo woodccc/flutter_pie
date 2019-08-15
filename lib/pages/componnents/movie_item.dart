@@ -7,20 +7,26 @@ class MovieItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(8),
-      height: 300,
-      child: Column(
-        children: <Widget>[
-          Image.network(
-            movie.images.small,
-            height: 180,
-          ),
-          Text(movie.title),
-          Text(movie.genres[0]),
-          Text(movie.rating.average.toString()),
-        ],
+    return GestureDetector(
+      child: Container(
+        padding: EdgeInsets.all(8),
+        height: 300,
+        child: Column(
+          children: <Widget>[
+            Image.network(
+              movie.images.small,
+              height: 180,
+            ),
+            Text(movie.title),
+            Text(movie.genres[0]),
+            Text(movie.rating.average.toString()),
+          ],
+        ),
       ),
+      onTap: () {
+        Navigator.pushNamed(context, "/movie_detail_page",
+            arguments: {"id": movie.id});
+      },
     );
   }
 }
