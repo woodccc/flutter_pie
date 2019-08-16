@@ -1,4 +1,4 @@
-package com.example.github_demo;
+package com.example.flutter_pie;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;
