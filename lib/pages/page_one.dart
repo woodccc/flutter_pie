@@ -6,7 +6,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import 'package:flutter_pie/api/api.dart' as api;
 
-import 'package:flutter_pie/pages/componnents/movie_item.dart';
+import 'package:flutter_pie/pages/widget/movie_item.dart';
 
 class PageOne extends StatefulWidget {
   @override
