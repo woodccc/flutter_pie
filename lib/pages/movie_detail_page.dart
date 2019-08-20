@@ -35,7 +35,8 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
             HeaderCover(
                 widget.arguments["image"],
                 'hero_tag_movie_image${widget.arguments["id"].toString()}',
-                widget.arguments["title"]),
+                widget.arguments["title"],
+                context),
             Text(_movieDetail.title),
             PlaceholderBox()
           ],
@@ -45,7 +46,7 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
   }
 }
 
-Widget HeaderCover(imageUrl, heroTag, movieTitle) {
+Widget HeaderCover(imageUrl, heroTag, movieTitle, context) {
   return DecoratedBox(
       decoration: BoxDecoration(
         color: Colors.black,
@@ -59,9 +60,12 @@ Widget HeaderCover(imageUrl, heroTag, movieTitle) {
           alignment: Alignment.center,
           children: <Widget>[
             Hero(
-              child: Image.network(
-                imageUrl,
-                height: 300,
+              child: GestureDetector(
+                onTap: () => Navigator.pop(context),
+                child: Image.network(
+                  imageUrl,
+                  height: 300,
+                ),
               ),
               tag: heroTag,
             ),

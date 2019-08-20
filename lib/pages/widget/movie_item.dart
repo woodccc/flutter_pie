@@ -27,7 +27,7 @@ class MovieItem extends StatelessWidget {
       child: MovieCard(),
       onTap: () {
         Navigator.pushNamed(context, "/movie_detail_page",
-            arguments: {"id": movie.id, "image": movie.images.small});
+            arguments: {"id": movie.id, "image": movie.images.small, "title": movie.title });
       },
     );
   }
