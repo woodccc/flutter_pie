@@ -29,19 +29,77 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: Column(
-        children: <Widget>[
-          Hero(
-            child: Image.network(
-              widget.arguments["image"],
-              height: 300,
-            ),
-            tag: 'hero_tag_movie_image${widget.arguments["id"].toString()}',
-          ),
-          Text(_movieDetail.title),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            HeaderCover(
+                widget.arguments["image"],
+                'hero_tag_movie_image${widget.arguments["id"].toString()}',
+                widget.arguments["title"]),
+            Text(_movieDetail.title),
+            PlaceholderBox()
+          ],
+        ),
       ),
     );
   }
+}
+
+Widget HeaderCover(imageUrl, heroTag, movieTitle) {
+  return DecoratedBox(
+      decoration: BoxDecoration(
+        color: Colors.black,
+      ),
+      child: ConstrainedBox(
+        constraints: BoxConstraints(
+          minWidth: double.infinity,
+          minHeight: 300,
+        ),
+        child: Stack(
+          alignment: Alignment.center,
+          children: <Widget>[
+            Hero(
+              child: Image.network(
+                imageUrl,
+                height: 300,
+              ),
+              tag: heroTag,
+            ),
+            Positioned(
+                left: 0,
+                bottom: 0,
+                width: 375,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                        colors: [Colors.transparent, Colors.black],
+                        stops: [0, 1],
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter),
+                  ),
+                  child: Container(
+                    height: 60,
+                    child: Center(
+                      child: Text(
+                        movieTitle,
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 24,
+                            fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                  ),
+                ))
+          ],
+        ),
+      ));
+}
+
+Widget PlaceholderBox() {
+  return Container(
+    height: 4000,
+    child: Center(
+      child: Text("PlaceholderBox"),
+    ),
+  );
 }
