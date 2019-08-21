@@ -42,7 +42,7 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
                       'hero_tag_movie_image${widget.arguments["id"].toString()}',
                       widget.arguments["title"],
                       context),
-                  placeholderBox()
+                  MovieDetails(_movieDetail)
                 ],
               ),
             ),
@@ -116,7 +116,8 @@ Widget bottomFloatButton(context) {
       child: Container(
         decoration: BoxDecoration(
             gradient: LinearGradient(
-                colors: [Colors.pink[300], Colors.pink[400], Colors.pink[500]], stops: [0, 0.8, 1])),
+                colors: [Colors.pink[300], Colors.pink[400], Colors.pink[500]],
+                stops: [0, 0.8, 1])),
         width: 375,
         height: 50,
         alignment: Alignment.center,
@@ -133,15 +134,84 @@ Widget bottomFloatButton(context) {
   );
 }
 
-Widget placeholderBox() {
+Widget MovieDetails(movie) {
   return Container(
     height: 800,
     decoration: BoxDecoration(
         borderRadius: BorderRadius.only(
             topLeft: Radius.circular(16), topRight: Radius.circular(16)),
         color: Colors.white),
-    child: Center(
-      child: Text("placeholderBox"),
+    child: Column(
+      children: <Widget>[TextInfomation(movie)],
+    ),
+  );
+}
+
+Widget TextInfomation(movie) {
+  if (movie.title.isEmpty) return Container(
+    width: 375,
+    alignment: Alignment.topCenter,
+    child: Text("加载中"),
+  ); 
+  Widget _text(
+      {text = "",
+      color = Colors.black,
+      size = 12.0,
+      space = 0.0,
+      weight = FontWeight.w400}) {
+    return Text(
+      text,
+      style: TextStyle(
+          color: color,
+          fontSize: size,
+          fontWeight: weight,
+          letterSpacing: space),
+    );
+  }
+
+  return Container(
+    alignment: Alignment.topLeft,
+    width: 375,
+    padding: EdgeInsets.all(18),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        _text(text: movie.title, size: 20.0, weight: FontWeight.w500),
+        Padding(
+          padding: EdgeInsets.only(top: 4, bottom: 6),
+          child: _text(
+              text: movie.original_title,
+              color: Colors.grey[400],
+              size: 11.0,
+              weight: FontWeight.w300),
+        ),
+        Padding(
+          padding: EdgeInsets.only(top: 2, bottom: 2),
+          child: _text(
+              text:
+                  '${movie.genres.join(" / ")} / ${movie.countries.join(" / ")} / ${movie.durations.join(" / ")}',
+              color: Colors.grey[700],
+              size: 11.0,
+              weight: FontWeight.w300),
+        ),
+        Padding(
+          padding: EdgeInsets.only(bottom: 12),
+          child: _text(
+              text: movie.pubdates.join(" / "),
+              color: Colors.grey[700],
+              size: 12.0,
+              weight: FontWeight.w300),
+        ),
+        Divider(),
+        Padding(
+          padding: EdgeInsets.only(bottom: 3),
+          child: _text(
+              text: movie.summary,
+              color: Colors.grey[700],
+              size: 12.0,
+              weight: FontWeight.w300),
+        ),
+      ],
     ),
   );
 }
