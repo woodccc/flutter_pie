@@ -54,7 +54,7 @@ class _HomePageState extends State<HomePage>
         tabViews: _renderViews(),
         tabItems: _renderTabs(),
         topPageControl: topPageControl,
-        backgroundColor: Colors.red[300],
+        backgroundColor: Colors.pink[300],
         indicatorColor: Colors.white,
         title: new Text("Flutter Pie"));
   }

@@ -29,24 +29,32 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            HeaderCover(
-                widget.arguments["image"],
-                'hero_tag_movie_image${widget.arguments["id"].toString()}',
-                widget.arguments["title"],
-                context),
-            Text(_movieDetail.title),
-            PlaceholderBox()
-          ],
-        ),
+      body: Stack(
+        alignment: Alignment.topCenter,
+        children: <Widget>[
+          SingleChildScrollView(
+            child: DecoratedBox(
+              decoration: BoxDecoration(color: Colors.black),
+              child: Column(
+                children: <Widget>[
+                  headerCover(
+                      widget.arguments["image"],
+                      'hero_tag_movie_image${widget.arguments["id"].toString()}',
+                      widget.arguments["title"],
+                      context),
+                  placeholderBox()
+                ],
+              ),
+            ),
+          ),
+          bottomFloatButton(context),
+        ],
       ),
     );
   }
 }
 
-Widget HeaderCover(imageUrl, heroTag, movieTitle, context) {
+Widget headerCover(imageUrl, heroTag, movieTitle, context) {
   return DecoratedBox(
       decoration: BoxDecoration(
         color: Colors.black,
@@ -99,11 +107,41 @@ Widget HeaderCover(imageUrl, heroTag, movieTitle, context) {
       ));
 }
 
-Widget PlaceholderBox() {
+Widget bottomFloatButton(context) {
+  return Positioned(
+    left: -16,
+    bottom: 0,
+    child: FlatButton(
+      onPressed: () => Navigator.pop(context),
+      child: Container(
+        decoration: BoxDecoration(
+            gradient: LinearGradient(
+                colors: [Colors.pink[300], Colors.pink[400], Colors.pink[500]], stops: [0, 0.8, 1])),
+        width: 375,
+        height: 50,
+        alignment: Alignment.center,
+        child: Text(
+          "特惠抢票",
+          style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.w400,
+              letterSpacing: 2,
+              fontSize: 18),
+        ),
+      ),
+    ),
+  );
+}
+
+Widget placeholderBox() {
   return Container(
-    height: 4000,
+    height: 800,
+    decoration: BoxDecoration(
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(16), topRight: Radius.circular(16)),
+        color: Colors.white),
     child: Center(
-      child: Text("PlaceholderBox"),
+      child: Text("placeholderBox"),
     ),
   );
 }
