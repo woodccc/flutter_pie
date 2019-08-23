@@ -5,6 +5,7 @@ import 'package:flutter_pie/api/api.dart' as api;
 import 'package:flutter_pie/api/model/movie_detail.dart';
 
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class MovieDetailPage extends StatefulWidget {
   MovieDetailPage({this.arguments});
@@ -36,13 +37,14 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
         decoration: BoxDecoration(
           color: Colors.black,
         ),
-        alignment: Alignment.topCenter,
+        alignment: Alignment.topLeft,
         constraints: BoxConstraints(minWidth: size.width),
         child: Stack(
           children: <Widget>[
             SingleChildScrollView(
-              child: DecoratedBox(
+              child: Container(
                 decoration: BoxDecoration(color: Colors.black),
+                width: size.width,
                 child: Column(
                   children: <Widget>[
                     headerCover(
@@ -50,7 +52,7 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
                         'hero_tag_movie_image${widget.arguments["id"].toString()}',
                         widget.arguments["title"],
                         context),
-                    MovieDetails(_movieDetail)
+                    MovieDetails(_movieDetail, context)
                   ],
                 ),
               ),
@@ -64,30 +66,30 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
 
   Widget headerCover(imageUrl, heroTag, movieTitle, context) {
     final size = MediaQuery.of(context).size;
-    return DecoratedBox(
+    return Container(
         decoration: BoxDecoration(
           color: Colors.black,
         ),
         child: ConstrainedBox(
           constraints: BoxConstraints(
-            minWidth: double.infinity,
+            minWidth: size.width,
             minHeight: 300,
           ),
           child: Stack(
-            alignment: Alignment.center,
+            alignment: Alignment.topLeft,
             children: <Widget>[
               Hero(
                 child: GestureDetector(
                   onTap: () => Navigator.pop(context),
                   child: Image.network(imageUrl,
-                      height: 500, width: 375, fit: BoxFit.fitWidth),
+                      height: 500, width: size.width, fit: BoxFit.fitWidth),
                 ),
                 tag: heroTag,
               ),
               Positioned(
                   left: 0,
                   bottom: 0,
-                  width: 375,
+                  width: size.width,
                   child: Container(
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
@@ -129,27 +131,36 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
     return Positioned(
       left: 0,
       bottom: 0,
-      child: Container(
-        decoration: BoxDecoration(
-            gradient: LinearGradient(
-                colors: [Colors.pink[300], Colors.pink[400], Colors.pink[500]],
-                stops: [0, 0.8, 1])),
-        width: size.width,
-        height: 50,
-        alignment: Alignment.center,
-        child: Text(
-          "特惠抢票",
-          style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.w400,
-              letterSpacing: 2,
-              fontSize: 18),
+      child: GestureDetector(
+        onTap: () => Navigator.pop(context),
+        child: Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(colors: [
+            Colors.pink[300],
+            Colors.pink[400],
+            Colors.pink[500]
+          ], stops: [
+            0,
+            0.8,
+            1
+          ])),
+          width: size.width,
+          height: 50,
+          alignment: Alignment.center,
+          child: Text(
+            "特惠抢票",
+            style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w400,
+                letterSpacing: 2,
+                fontSize: 18),
+          ),
         ),
       ),
     );
   }
 
-  Widget MovieDetails(movie) {
+  Widget MovieDetails(movie, context) {
     return Container(
       padding: EdgeInsets.only(bottom: 50),
       decoration: BoxDecoration(
@@ -159,18 +170,23 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
       child: ConstrainedBox(
         constraints: BoxConstraints(minHeight: 380),
         child: Column(
-          children: <Widget>[TextInfomation(movie)],
+          children: <Widget>[TextInfomation(movie, context)],
         ),
       ),
     );
   }
 
-  Widget TextInfomation(movie) {
+  Widget TextInfomation(movie, context) {
+    final size = MediaQuery.of(context).size;
     if (movie.title.isEmpty)
       return Container(
-        width: 375,
+        width: size.width,
         alignment: Alignment.topCenter,
-        child: Text("加载中"),
+        padding: EdgeInsets.only(top: 20),
+        child: SpinKitThreeBounce(
+          color: Colors.blue,
+          size: 20.0,
+        ),
       );
     Widget _text(
         {text = "",
@@ -190,7 +206,7 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
 
     return Container(
       alignment: Alignment.topLeft,
-      width: 375,
+      width: size.width,
       padding: EdgeInsets.all(18),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
