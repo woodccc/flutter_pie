@@ -1,6 +1,9 @@
+// dependency
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+// widget
 import 'package:flutter_pie/widget/my_tabbar_widget.dart';
-
+// pages
 import 'package:flutter_pie/pages/page_one.dart';
 import 'package:flutter_pie/pages/page_two.dart';
 import 'package:flutter_pie/pages/page_three.dart';
@@ -50,6 +53,9 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
+    // 初始设置 ScreenUtil 屏幕宽高
+    ScreenUtil.instance = ScreenUtil(width: 750, height: 1334)..init(context);
+
     return MYTabbarWidget(
         tabViews: _renderViews(),
         tabItems: _renderTabs(),

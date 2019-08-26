@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:flutter_pie/api/api.dart' as api;
 
@@ -31,20 +32,19 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
           color: Colors.black,
         ),
         alignment: Alignment.topLeft,
-        constraints: BoxConstraints(minWidth: size.width),
+        constraints: BoxConstraints(minWidth: ScreenUtil.getInstance().setWidth(750)),
         child: Stack(
           children: <Widget>[
             SingleChildScrollView(
               child: Container(
                 decoration: BoxDecoration(color: Colors.black),
-                width: size.width,
+                width: ScreenUtil.getInstance().setWidth(750),
                 child: Column(
                   children: <Widget>[
                     headerCover(
@@ -65,14 +65,13 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
   }
 
   Widget headerCover(imageUrl, heroTag, movieTitle, context) {
-    final size = MediaQuery.of(context).size;
     return Container(
         decoration: BoxDecoration(
           color: Colors.black,
         ),
         child: ConstrainedBox(
           constraints: BoxConstraints(
-            minWidth: size.width,
+            minWidth: ScreenUtil.getInstance().setWidth(750),
             minHeight: 300,
           ),
           child: Stack(
@@ -82,14 +81,14 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
                 child: GestureDetector(
                   onTap: () => Navigator.pop(context),
                   child: Image.network(imageUrl,
-                      height: 500, width: size.width, fit: BoxFit.fitWidth),
+                      height: 500, width: ScreenUtil.getInstance().setWidth(750), fit: BoxFit.fitWidth),
                 ),
                 tag: heroTag,
               ),
               Positioned(
                   left: 0,
                   bottom: 0,
-                  width: size.width,
+                  width: ScreenUtil.getInstance().setWidth(750),
                   child: Container(
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
@@ -106,10 +105,10 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter),
                     ),
-                    constraints: BoxConstraints(minWidth: size.width),
+                    constraints: BoxConstraints(minWidth: ScreenUtil.getInstance().setWidth(750)),
                     child: Container(
                       height: 60,
-                      width: size.width,
+                      width: ScreenUtil.getInstance().setWidth(750),
                       child: Center(
                         child: Text(
                           movieTitle,
@@ -127,7 +126,6 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
   }
 
   Widget bottomFloatButton(context) {
-    final size = MediaQuery.of(context).size;
     return Positioned(
       left: 0,
       bottom: 0,
@@ -144,7 +142,7 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
             0.8,
             1
           ])),
-          width: size.width,
+          width: ScreenUtil.getInstance().setWidth(750),
           height: 50,
           alignment: Alignment.center,
           child: Text(
@@ -177,10 +175,9 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
   }
 
   Widget TextInfomation(movie, context) {
-    final size = MediaQuery.of(context).size;
     if (movie.title.isEmpty)
       return Container(
-        width: size.width,
+        width: ScreenUtil.getInstance().setWidth(750),
         alignment: Alignment.topCenter,
         padding: EdgeInsets.only(top: 20),
         child: SpinKitThreeBounce(
@@ -206,7 +203,7 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
 
     return Container(
       alignment: Alignment.topLeft,
-      width: size.width,
+      width: ScreenUtil.getInstance().setWidth(750),
       padding: EdgeInsets.all(18),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
