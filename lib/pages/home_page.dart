@@ -1,6 +1,7 @@
 // dependency
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 // widget
 import 'package:flutter_pie/widget/my_tabbar_widget.dart';
 // pages
@@ -15,22 +16,16 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
-
   final PageController topPageControl = new PageController();
 
   final List<String> tab = ["动态", "趋势", "我的"];
 
   _renderTabs() {
-    List<Widget> list =  new List();
-    for (int i = 0; i < tab.length; i ++) {
+    List<Widget> list = new List();
+    for (int i = 0; i < tab.length; i++) {
       list.add(FlatButton(
         onPressed: () {
-         topPageControl.jumpTo(
-           MediaQuery
-            .of(context)
-            .size
-            .width * i
-         );
+          topPageControl.jumpTo(MediaQuery.of(context).size.width * i);
         },
         child: Text(
           tab[i],
@@ -43,7 +38,7 @@ class _HomePageState extends State<HomePage>
     return list;
   }
 
-  _renderViews () {
+  _renderViews() {
     return [
       PageOne(),
       PageTwo(),
@@ -56,12 +51,37 @@ class _HomePageState extends State<HomePage>
     // 初始设置 ScreenUtil 屏幕宽高
     ScreenUtil.instance = ScreenUtil(width: 750, height: 1334)..init(context);
 
-    return MYTabbarWidget(
-        tabViews: _renderViews(),
-        tabItems: _renderTabs(),
-        topPageControl: topPageControl,
-        backgroundColor: Colors.pink[300],
-        indicatorColor: Colors.white,
-        title: new Text("Flutter Pie"));
+    return new StoreConnector<dynamic, dynamic>(
+      converter: (store) => store.state,
+      builder: (context, color) {
+        return new MYTabbarWidget(
+            tabViews: _renderViews(),
+            tabItems: _renderTabs(),
+            topPageControl: topPageControl,
+            backgroundColor: color,
+            indicatorColor: Colors.white,
+            drawer: homeDrawer(),
+            title: new Text("Flutter Pie"));
+      },
+    );
+  }
+
+  Widget homeDrawer() {
+    return new StoreConnector<dynamic, dynamic>(
+        converter: (store) => store.state,
+        builder: (context, color) {
+          return Container(
+            alignment: Alignment.center,
+            child: Text(
+              "drawer",
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: ScreenUtil.getInstance().setSp(24)),
+            ),
+            width: ScreenUtil.getInstance().setWidth(500),
+            height: ScreenUtil.getInstance().setHeight(1334),
+            decoration: BoxDecoration(color: color),
+          );
+        });
   }
 }
