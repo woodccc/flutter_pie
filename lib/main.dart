@@ -5,18 +5,11 @@ import 'package:redux/redux.dart';
 import 'package:flutter_pie/pages/home_page.dart';
 
 import 'package:flutter_pie/pages/movie_detail_page.dart';
-
-// One simple action: Increment
-enum Actions { UpdateThemeColor }
-
-// The reducer, which takes the previous count and increments it in response
-// to an Increment action.
-Map appReducer(dynamic state, dynamic action) {
-  return state;
-}
+import 'package:flutter_pie/redux/index.dart';
 
 void main() {
-  final store = new Store<dynamic>(appReducer, initialState: Colors.green);
+  final store = Store<ThemeColorState>(reducer,
+      initialState: ThemeColorState.initState());
 
   runApp(new FlutterReduxApp(
     title: 'Flutter Demo',
@@ -25,7 +18,7 @@ void main() {
 }
 
 class FlutterReduxApp extends StatelessWidget {
-  final Store<dynamic> store;
+  final Store<ThemeColorState> store;
   final String title;
 
   FlutterReduxApp({Key key, this.store, this.title}) : super(key: key);
@@ -37,28 +30,24 @@ class FlutterReduxApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StoreProvider<dynamic>(
+    return StoreProvider<ThemeColorState>(
       store: store,
-      child: new StoreBuilder(
-        builder: (context, store) {
-          return MaterialApp(
-            title: 'Flutter Demo',
-            theme: ThemeData(
-              primarySwatch: store.state,
-            ),
-            home: HomePage(),
-            onGenerateRoute: (RouteSettings settings) {
-              // 统一处理
-              final String name = settings.name;
-              final Function pageContentBuilder = this.routes[name];
-              if (pageContentBuilder != null) {
-                final Route route = MaterialPageRoute(
-                    builder: (context) => pageContentBuilder(context,
-                        arguments: settings.arguments));
-                return route;
-              }
-            },
-          );
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.pink,
+        ),
+        home: HomePage(),
+        onGenerateRoute: (RouteSettings settings) {
+          // 统一处理
+          final String name = settings.name;
+          final Function pageContentBuilder = this.routes[name];
+          if (pageContentBuilder != null) {
+            final Route route = MaterialPageRoute(
+                builder: (context) =>
+                    pageContentBuilder(context, arguments: settings.arguments));
+            return route;
+          }
         },
       ),
     );

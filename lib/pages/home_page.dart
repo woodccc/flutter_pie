@@ -8,6 +8,8 @@ import 'package:flutter_pie/widget/my_tabbar_widget.dart';
 import 'package:flutter_pie/pages/page_one.dart';
 import 'package:flutter_pie/pages/page_two.dart';
 import 'package:flutter_pie/pages/page_three.dart';
+// redux
+import 'package:flutter_pie/redux/index.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -51,14 +53,16 @@ class _HomePageState extends State<HomePage>
     // 初始设置 ScreenUtil 屏幕宽高
     ScreenUtil.instance = ScreenUtil(width: 750, height: 1334)..init(context);
 
-    return new StoreConnector<dynamic, dynamic>(
-      converter: (store) => store.state,
-      builder: (context, color) {
-        return new MYTabbarWidget(
+    return new StoreConnector<ThemeColorState, dynamic>(
+      converter: (store) => store.state.themeColor,
+      builder: (context, themeColor) {
+        print("----------1----------");
+        print(themeColor);
+        return MYTabbarWidget(
             tabViews: _renderViews(),
             tabItems: _renderTabs(),
             topPageControl: topPageControl,
-            backgroundColor: color,
+            backgroundColor: themeColor,
             indicatorColor: Colors.white,
             drawer: homeDrawer(),
             title: new Text("Flutter Pie"));
@@ -67,21 +71,37 @@ class _HomePageState extends State<HomePage>
   }
 
   Widget homeDrawer() {
-    return new StoreConnector<dynamic, dynamic>(
-        converter: (store) => store.state,
-        builder: (context, color) {
-          return Container(
-            alignment: Alignment.center,
-            child: Text(
-              "drawer",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: ScreenUtil.getInstance().setSp(24)),
-            ),
-            width: ScreenUtil.getInstance().setWidth(500),
-            height: ScreenUtil.getInstance().setHeight(1334),
-            decoration: BoxDecoration(color: color),
-          );
-        });
+    return new StoreConnector<ThemeColorState, ThemeColorViewModel>(
+        converter: (store) {
+      return ThemeColorViewModel(
+        color: store.state.themeColor,
+        onClick: () => store.dispatch(ThemeColorActions.updateThemeColor),
+      );
+    }, builder: (context, vm) {
+      print("----------2----------");
+      print(vm.color);
+      return GestureDetector(
+        onTap: vm.onClick,
+        child: Container(
+          alignment: Alignment.center,
+          child: Text(
+            "drawer",
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: ScreenUtil.getInstance().setSp(24)),
+          ),
+          width: ScreenUtil.getInstance().setWidth(500),
+          height: ScreenUtil.getInstance().setHeight(1334),
+          decoration: BoxDecoration(color: vm.color),
+        ),
+      );
+    });
   }
+}
+
+class ThemeColorViewModel {
+  final dynamic color;
+  final void Function() onClick;
+
+  ThemeColorViewModel({this.color, this.onClick});
 }
