@@ -70,27 +70,67 @@ class _HomePageState extends State<HomePage>
   }
 
   Widget homeDrawer() {
+    final List colors = [
+      Colors.red,
+      Colors.pink,
+      Colors.purple,
+      Colors.deepPurple,
+      Colors.indigo,
+      Colors.blue,
+      Colors.lightBlue,
+      Colors.cyan,
+      Colors.teal,
+      Colors.green,
+      Colors.lightGreen,
+      Colors.lime,
+      Colors.yellow,
+      Colors.amber,
+      Colors.orange,
+      Colors.deepOrange,
+      Colors.brown,
+      Colors.grey,
+      Colors.blueGrey,
+    ];
+    colors_list(onClick) {
+      return colors.map((item) {
+        return GestureDetector(
+          onTap: () {
+            onClick(item);
+          },
+          child: Container(
+            child: Text(""),
+            // color: item,
+            height: ScreenUtil.getInstance().setHeight(60),
+            padding: EdgeInsets.all(4.0),
+            margin:
+                EdgeInsets.only(bottom: ScreenUtil.getInstance().setHeight(12)),
+            decoration: BoxDecoration(
+                color: item,
+                border: Border.all(
+                    width: ScreenUtil.getInstance().setWidth(2),
+                    color: Colors.white)),
+          ),
+        );
+      }).toList();
+    }
+
     return new StoreConnector<APPState, ThemeColorViewModel>(
         converter: (store) {
       return ThemeColorViewModel(
         color: store.state.themeData.primaryColor,
-        onClick: () => store.dispatch(new RefreshThemeDataAction(ThemeData(primarySwatch: Colors.blue))),
+        onClick: (item) => store.dispatch(
+            new RefreshThemeDataAction(ThemeData(primarySwatch: item))),
       );
     }, builder: (context, vm) {
-      return GestureDetector(
-        onTap: vm.onClick,
-        child: Container(
-          alignment: Alignment.center,
-          child: Text(
-            "drawer",
-            style: TextStyle(
-                color: Colors.white,
-                fontSize: ScreenUtil.getInstance().setSp(24)),
-          ),
-          width: ScreenUtil.getInstance().setWidth(500),
-          height: ScreenUtil.getInstance().setHeight(1334),
-          decoration: BoxDecoration(color: vm.color),
+      return Container(
+        alignment: Alignment.topCenter,
+        child: ListView(
+          children: colors_list(vm.onClick),
         ),
+        width: ScreenUtil.getInstance().setWidth(500),
+        height: ScreenUtil.getInstance().setHeight(1334),
+        padding: EdgeInsets.all(ScreenUtil.getInstance().setWidth(16)),
+        decoration: BoxDecoration(color: vm.color),
       );
     });
   }
@@ -98,7 +138,7 @@ class _HomePageState extends State<HomePage>
 
 class ThemeColorViewModel {
   final dynamic color;
-  final void Function() onClick;
+  final void Function(Color color) onClick;
 
   ThemeColorViewModel({this.color, this.onClick});
 }

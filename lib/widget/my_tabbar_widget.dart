@@ -44,7 +44,8 @@ class MYTabbarWidget extends StatefulWidget {
       topPageControl);
 }
 
-class _MYTabBarState extends State<MYTabbarWidget> with SingleTickerProviderStateMixin {
+class _MYTabBarState extends State<MYTabbarWidget>
+    with SingleTickerProviderStateMixin {
   final List<Widget> _tabItems;
 
   final List<Widget> _tabViews;
@@ -105,6 +106,16 @@ class _MYTabBarState extends State<MYTabbarWidget> with SingleTickerProviderStat
         appBar: new AppBar(
           backgroundColor: Theme.of(context).primaryColor,
           title: _title,
+          leading: Builder(
+            builder: (BuildContext context) {
+              return IconButton(
+                icon: const Icon(Icons.color_lens),
+                onPressed: () {
+                  Scaffold.of(context).openDrawer();
+                },
+              );
+            },
+          ),
         ),
 
         ///页面主体，PageView，用于承载Tab对应的页面
