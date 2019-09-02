@@ -1,5 +1,6 @@
 // dependency
 import 'package:flutter/material.dart';
+import 'package:flutter_pie/redux/theme_data_redux.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 // widget
@@ -53,11 +54,9 @@ class _HomePageState extends State<HomePage>
     // 初始设置 ScreenUtil 屏幕宽高
     ScreenUtil.instance = ScreenUtil(width: 750, height: 1334)..init(context);
 
-    return new StoreConnector<ThemeColorState, dynamic>(
-      converter: (store) => store.state.themeColor,
+    return new StoreConnector<APPState, dynamic>(
+      converter: (store) => store.state.themeData.primaryColor,
       builder: (context, themeColor) {
-        print("----------1----------");
-        print(themeColor);
         return MYTabbarWidget(
             tabViews: _renderViews(),
             tabItems: _renderTabs(),
@@ -71,15 +70,13 @@ class _HomePageState extends State<HomePage>
   }
 
   Widget homeDrawer() {
-    return new StoreConnector<ThemeColorState, ThemeColorViewModel>(
+    return new StoreConnector<APPState, ThemeColorViewModel>(
         converter: (store) {
       return ThemeColorViewModel(
-        color: store.state.themeColor,
-        onClick: () => store.dispatch(ThemeColorActions.updateThemeColor),
+        color: store.state.themeData.primaryColor,
+        onClick: () => store.dispatch(new RefreshThemeDataAction(ThemeData(primarySwatch: Colors.blue))),
       );
     }, builder: (context, vm) {
-      print("----------2----------");
-      print(vm.color);
       return GestureDetector(
         onTap: vm.onClick,
         child: Container(

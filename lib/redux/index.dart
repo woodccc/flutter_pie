@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
 
-class ThemeColorState {
-  final dynamic _themeColor;
-  get themeColor => _themeColor;
+import 'package:flutter_pie/redux/theme_data_redux.dart';
 
-  ThemeColorState(this._themeColor);
+class APPState {
+  ThemeData themeData;
 
-  ThemeColorState.initState() : _themeColor = Colors.blue;
+  APPState({this.themeData});
 }
 
-enum ThemeColorActions { updateThemeColor }
-
-ThemeColorState reducer(ThemeColorState state, action) {
-  if (action == ThemeColorActions.updateThemeColor) {
-    return ThemeColorState(Colors.red);
-  }
+APPState appReducer(APPState state, action) {
+  return APPState(
+    themeData: ThemeDataReducer(state.themeData, action),
+  );
 }

@@ -8,20 +8,15 @@ import 'package:flutter_pie/pages/movie_detail_page.dart';
 import 'package:flutter_pie/redux/index.dart';
 
 void main() {
-  final store = Store<ThemeColorState>(reducer,
-      initialState: ThemeColorState.initState());
-
-  runApp(new FlutterReduxApp(
-    title: 'Flutter Demo',
-    store: store,
-  ));
+  runApp(new FlutterReduxApp());
 }
 
 class FlutterReduxApp extends StatelessWidget {
-  final Store<ThemeColorState> store;
-  final String title;
+  final store = Store<APPState>(appReducer,
+      initialState:
+          new APPState(themeData: ThemeData(primarySwatch: Colors.pink)));
 
-  FlutterReduxApp({Key key, this.store, this.title}) : super(key: key);
+  FlutterReduxApp({Key key}) : super(key: key);
   // 定义路由信息
   final Map<String, Function> routes = {
     '/movie_detail_page': (context, {arguments}) =>
@@ -30,7 +25,7 @@ class FlutterReduxApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StoreProvider<ThemeColorState>(
+    return StoreProvider<APPState>(
       store: store,
       child: MaterialApp(
         title: 'Flutter Demo',
