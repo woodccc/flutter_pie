@@ -27,22 +27,26 @@ class FlutterReduxApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return StoreProvider<APPState>(
       store: store,
-      child: MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.pink,
-        ),
-        home: HomePage(),
-        onGenerateRoute: (RouteSettings settings) {
-          // 统一处理
-          final String name = settings.name;
-          final Function pageContentBuilder = this.routes[name];
-          if (pageContentBuilder != null) {
-            final Route route = MaterialPageRoute(
-                builder: (context) =>
-                    pageContentBuilder(context, arguments: settings.arguments));
-            return route;
-          }
+      child: new StoreBuilder<APPState>(
+        builder: (context, store) {
+          return MaterialApp(
+            title: 'Flutter Demo',
+            theme: ThemeData(
+              primarySwatch: store.state.themeData.primaryColor,
+            ),
+            home: HomePage(),
+            onGenerateRoute: (RouteSettings settings) {
+              // 统一处理
+              final String name = settings.name;
+              final Function pageContentBuilder = this.routes[name];
+              if (pageContentBuilder != null) {
+                final Route route = MaterialPageRoute(
+                    builder: (context) => pageContentBuilder(context,
+                        arguments: settings.arguments));
+                return route;
+              }
+            },
+          );
         },
       ),
     );

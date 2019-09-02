@@ -103,7 +103,7 @@ class _MYTabBarState extends State<MYTabbarWidget> with SingleTickerProviderStat
 
         ///标题栏
         appBar: new AppBar(
-          backgroundColor: _backgroundColor,
+          backgroundColor: Theme.of(context).primaryColor,
           title: _title,
         ),
 
@@ -122,7 +122,7 @@ class _MYTabBarState extends State<MYTabbarWidget> with SingleTickerProviderStat
 
         ///底部导航栏，也就是tab栏
         bottomNavigationBar: new Material(
-          color: _backgroundColor,
+          color: Theme.of(context).primaryColor,
 
           ///tabBar控件
           child: new TabBar(
